@@ -6,7 +6,13 @@
 
 require 'facter/util/ip'
 require 'rubygems'
-require 'netaddr'
+# Try to load the dependent gem and complain if it doesn't go.
+begin 
+  require 'netaddr'
+rescue
+  raise unless e.message =~ /netaddr/
+  puts "Cannot get unique networks without dependent netaddr gem" 
+end
  
 # We only care about an interface if it has an address
 # This handy function will tell if that's true
